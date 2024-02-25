@@ -58,7 +58,9 @@ Entity classes implement `Entity` via delegation:
 
 ```kotlin
 typealias Name = String
-class Bank(name: Name) : Entity<Bank> by Entity() {
+class Bank(initialName: Name) : Entity<Bank> by Entity() {
     // ... elided
 }
 ```
+
+[Next](02-entity-classes.md)

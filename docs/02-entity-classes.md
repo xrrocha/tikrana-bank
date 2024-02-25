@@ -4,7 +4,7 @@ Entity classes implement the `Entity` interface via simple delegation:
 
 ```kotlin
 typealias Name = String
-class Bank(name: Name) : Entity<Bank> by Entity() {
+class Bank(initialName: Name) : Entity<Bank> by Entity() {
     // ... elided
 }
 ```
@@ -40,12 +40,12 @@ assertThrows(IllegalArgumentException::class.java) {
 }
 ```
 
-If instead of leveraging the `Entity`-provided data definition DSL, we'd written 
+If, instead of leveraging the `Entity`-provided data definition DSL, we'd written 
 this class by hand, the implementation would have been:
 
 ```kotlin
 class Bank(initialName: Name) : Entity<Bank> by Entity() {
-    var name: String = initialName
+    var name: Name = initialName
         set(value) {
             val nValue = value.trim()
             require(nValue.isEmpty()) { "Invalid bank empty name: '$value'" }
@@ -56,3 +56,5 @@ class Bank(initialName: Name) : Entity<Bank> by Entity() {
 
 So far, using the `scalar` delegate may not look like such a _big_ boon, but things
 get better (and simpler!) the more we leverage the data definition DSL.
+
+[Previous](01-entity-interface.md)
