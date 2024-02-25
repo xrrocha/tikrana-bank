@@ -100,7 +100,7 @@ bank.renameTo("\tACME Bank ")
 assertEquals("ACME Bank", bank.name)
 ```
 
-Yes: this may not seen like palatable to some who might argue we've increased
+Yes: this may not seen palatable to some who might argue we've increased
 complexity without major gains in preserving integrity (in the end, we can
 trust ourselves to carefully craft integrity-preserving client code, right?).
 
