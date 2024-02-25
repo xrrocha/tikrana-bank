@@ -79,20 +79,30 @@ class Bank(name: Name) : Entity<Bank> by Entity() {
     // Renames bank and returns old name
     fun renameTo(newName: Name): Name =
         name.also {
-            // ... amy future synchronization will take place here...
+            // ... any future synchronization will take place here...
             name = newName
         }
 }
 ```
 
-Here, we mar the `name` property as `private set` so it cannot be freely mutated
+Here, we mark the `name` property as `private set` so it cannot be freely mutated
 by client code.
 
 We also add a meaningful `renameTo` method that sets the new name and courteously
 returns the old one.
 
-Yes, this may not seen like a gain to some who could rightfully argue we've
-increased complexity without major gains in preserving integrity.
+Given these changes, we could test our `Bank` class like so:
+
+```kotlin
+val bank = Bank("Monopoly Bank")
+assertEquals("Monopoly Bank", bank.name)
+bank.renameTo("\tACME Bank ")
+assertEquals("ACME Bank", bank.name)
+```
+
+Yes: this may not seen like palatable to some who might argue we've increased
+complexity without major gains in preserving integrity (in the end, we can
+trust ourselves to carefully craft integrity-preserving client code, right?).
 
 However, as we'll see later on, when the `name` participates of some other
 structure (such as a `Map<Name, Bank>` used to guarantee bank name uniqueness, for
@@ -100,6 +110,7 @@ instance), the `renameTo` operation will need to take care of verifying the new
 name is not a duplicate _and_ replace the old name by the new one in the map.
 
 We wouldn't want our clients to be responsible for keeping things in sync or
-(worse yet!) to be able to subvert our cherished uniqueness-ensuring mechanism.
+(worse yet!) to be able to subvert our cherished uniqueness-ensuring mechanism,
+would we?
 
 [Previous: The `Entity` Interface](01-entity-interface.md)
