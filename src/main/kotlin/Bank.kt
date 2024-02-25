@@ -6,7 +6,7 @@ class Bank(
             require(it.isNotEmpty()) { "Invalid empty bank name: '$value'" }
         }
     }
-        private set
+        private set // Look ma: clients can't mutate name directly
 
     // Renames bank and returns old name
     fun renameTo(newName: Name): Name =
