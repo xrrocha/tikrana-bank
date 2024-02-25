@@ -63,4 +63,4 @@ class Bank(initialName: Name) : Entity<Bank> by Entity() {
 }
 ```
 
-[Next](02-entity-classes.md)
+[Next: Entity Classes](02-entity-classes.md)

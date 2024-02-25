@@ -102,4 +102,4 @@ name is not a duplicate _and_ replace the old name by the new one in the map.
 We wouldn't want our clients to be responsible for keeping things in sync or
 (worse yet!) to be able to subvert our cherished uniqueness-ensuring mechanism.
 
-[Previous](01-entity-interface.md)
+[Previous: The `Entity` Interface](01-entity-interface.md)
