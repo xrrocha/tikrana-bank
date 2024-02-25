@@ -1,4 +1,5 @@
 import java.math.BigDecimal
+import kotlin.reflect.KClass
 import kotlin.reflect.KProperty
 
 typealias Id = Int
@@ -19,11 +20,13 @@ interface Entity<E : Entity<E>> {
     companion object {
         private var nextId = 1
 
-        operator fun <E : Entity<E>> invoke(): Entity<E> {
-            return object : Entity<E> {
+        inline operator fun <reified E : Entity<E>> invoke(): Entity<E> =
+            newInstance(E::class)
+
+        fun <E : Entity<E>> newInstance(kClass: KClass<E>): Entity<E> =
+            object : Entity<E> {
                 override val id: Id = nextId++
             }
-        }
     }
 }
 
