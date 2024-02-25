@@ -8,6 +8,8 @@ typealias Amount = BigDecimal
 typealias ErrorMessage = String
 typealias Errors = Map<Name, ErrorMessage>
 
+fun Name.validateName(): Boolean = isNotEmpty()
+
 interface Entity<E : Entity<E>> {
     val id: Id
 
