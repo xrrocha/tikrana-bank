@@ -15,5 +15,5 @@ with the following design goals:
 
 Exploration notes are:
 
-1. [The `Entity` Interface](docs/01-entity-interface.md)
-2. [Entity Classes](docs/02-entity-classes.md)
+1. [The `Entity` Interface](notes/01-entity-interface.md)
+2. [Entity Classes](notes/02-entity-classes.md)
