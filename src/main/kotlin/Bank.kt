@@ -4,7 +4,7 @@ class Bank(
 
     var name by scalar(name) { value ->
         value.trim().also {
-            require(it.validateName0()) { "Invalid bank name: '$value'" }
+            require(it.validateName()) { "Invalid bank name: '$value'" }
         }
     }
         private set // Look ma: clients can't mutate name directly
