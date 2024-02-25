@@ -6,4 +6,12 @@ class Bank(
             require(it.isNotEmpty()) { "Invalid empty bank name: '$value'" }
         }
     }
+        private set
+
+    // Renames bank and returns old name
+    fun renameTo(newName: Name): Name =
+        name.also {
+            // ... amy future synchronization will take place here...
+            name = newName
+        }
 }

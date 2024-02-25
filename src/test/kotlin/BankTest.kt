@@ -30,7 +30,7 @@ class BankTest {
     fun `Updates bank name`() {
         val bank = Bank("Monopoly Bank")
         assertEquals("Monopoly Bank", bank.name)
-        bank.name = "\tACME Bank "
+        bank.renameTo("\tACME Bank ")
         assertEquals("ACME Bank", bank.name)
     }
 }
