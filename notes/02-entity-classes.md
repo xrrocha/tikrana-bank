@@ -107,7 +107,8 @@ trust ourselves to carefully craft integrity-preserving client code, right?).
 However, as we'll see later on, when the `name` participates of some other
 structure (such as a `Map<Name, Bank>` used to guarantee bank name uniqueness, for
 instance), the `renameTo` operation will need to take care of verifying the new
-name is not a duplicate _and_ replace the old name by the new one in the map.
+name is not a duplicate _and_ replacing the old name iweth the new one in the
+map.
 
 We wouldn't want our clients to be responsible for keeping things in sync or
 (worse yet!) to be able to subvert our cherished uniqueness-ensuring mechanism,
