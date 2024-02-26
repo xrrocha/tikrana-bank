@@ -100,7 +100,7 @@ bank.renameTo("\tACME Bank ")
 assertEquals("ACME Bank", bank.name)
 ```
 
-Yes: this may not seen palatable to some who might argue we've increased
+This may not seen palatable to some who might argue we've increased
 complexity without major gains in preserving integrity (in the end, we can
 trust ourselves to carefully craft integrity-preserving client code, right?).
 
@@ -111,7 +111,6 @@ name is not a duplicate _and_ replacing the old name iweth the new one in the
 map.
 
 We wouldn't want our clients to be responsible for keeping things in sync or
-(worse yet!) to be able to subvert our cherished uniqueness-ensuring mechanism,
-would we?
+(worse yet!) to be able to subvert our cherished uniqueness-ensuring mechanism.
 
 [Previous: The `Entity` Interface](01-entity-interface.md)

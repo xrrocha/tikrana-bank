@@ -2,11 +2,12 @@
 
 _Tikrana Bank_ is an exploration of the
 [memory image](https://martinfowler.com/bliki/MemoryImage.html) pattern
-using Kotlin (on the JVM to start with, but aiming at portability).
+using Kotlin (on the JVM to start with, but aiming at platform portability).
 
-This exploration takes advantage of some of Kotlin's unique, powerful 
-constructs (such as [delegates](https://kotlinlang.org/docs/delegation.html))
-with the following design goals:
+This exploration takes advantage of some of Kotlin's unique constructs (such
+as [delegates](https://kotlinlang.org/docs/delegation.html) and
+[extension functions](https://kotlinlang.org/docs/extensions.html)) with the
+following design goals:
 
 - Minimize verbosity
 - Maximize readability
