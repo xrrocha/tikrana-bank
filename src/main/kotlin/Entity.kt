@@ -15,9 +15,3 @@ interface Entity<E : Entity<E>> {
             }
     }
 }
-
-fun <E : Entity<E>> E.string(
-    initialValue: String,
-    config: StringScalar<E>.() -> Unit
-): StringScalar<E> =
-    StringScalar<E>(initialValue, config)

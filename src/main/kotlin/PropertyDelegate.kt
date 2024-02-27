@@ -56,8 +56,14 @@ class StringScalar<E>(
     config: StringScalar<E>.() -> Unit
 ) : ScalarDelegate<E, String, StringScalar<E>>(initialValue, config) {
 
-    fun nonEmpty() = String::isNotEmpty
+    val nonEmpty = String::isNotEmpty
     fun lengthRange(min: Int, max: Int) = { str: String ->
         str.length in min..max
     }
 }
+
+fun <E : Entity<E>> E.string(
+    initialValue: String,
+    config: StringScalar<E>.() -> Unit
+): StringScalar<E> =
+    StringScalar<E>(initialValue, config)

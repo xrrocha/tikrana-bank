@@ -15,8 +15,9 @@ The entity metadata declared by the DSL applies to:
 - Property, entity an transaction-level validation
 - Efficient, transparent participation in transactions
  
-The delegation-enabled mechanism used to specify entity metadata is more
-expressive, more type-safe and easier to read than "classical" `@` annotations.
+The delegation-enabled mechanism used to specify entity and property metadata
+is more expressive, more type-safe and easier to read than "classical"
+`@` annotations.
 
 ## Entity Representation
 
@@ -58,9 +59,15 @@ Entity classes implement `Entity` via delegation:
 
 ```kotlin
 typealias Name = String
+
 class Bank(initialName: Name) : Entity<Bank> by Entity() {
-    // ... elided
+    var name: Name = initialName
+        set(value) {
+            // ... normalization and validation elided...
+            field = value
+        }
+    // ... more bank stuff...
 }
 ```
 
-[Next: Entity Classes](02-entity-classes.md)
+[Next: Entity Classes](02-scalar-properties)
