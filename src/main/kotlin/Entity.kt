@@ -1,36 +1,7 @@
-import arrow.core.Either
-import arrow.core.left
-import arrow.core.right
-import java.math.BigDecimal
 import kotlin.reflect.KClass
-import kotlin.reflect.KProperty
-
-typealias Id = Int
-typealias Name = String
-typealias Amount = BigDecimal
-typealias ErrorMessage = String
-typealias Errors = Map<Name, ErrorMessage>
-
-fun Name.prepareName(): Either<ErrorMessage, Name> =
-    normalizeSpace().let {
-        if (it.isNotEmpty()) it.right()
-        else "Name cannot be empty".left()
-    }
-
-fun String.normalizeSpace(): String =
-    trim()
-        .split("\\s+")
-        .joinToString(" ")
-
 
 interface Entity<E : Entity<E>> {
     val id: Id
-
-    fun <P> scalar(
-        initialValue: P,
-        checkValue: (P) -> P = { it }
-    ): Scalar<E, P> =
-        Scalar<E, P>(initialValue, checkValue)
 
     companion object {
         private var nextId = 1
@@ -45,19 +16,8 @@ interface Entity<E : Entity<E>> {
     }
 }
 
-class Scalar<E, P>(
-    initialValue: P,
-    private val checkValue: (P) -> P = { it }
-) {
-    private var value: P
-
-    init {
-        this.value = checkValue(initialValue)
-    }
-
-    operator fun getValue(thisRef: E, property: KProperty<*>): P = value
-
-    operator fun setValue(thisRef: E, property: KProperty<*>, value: P) {
-        this.value = checkValue(value)
-    }
-}
+fun <E : Entity<E>> E.string(
+    initialValue: String,
+    config: StringScalar<E>.() -> Unit
+): StringScalar<E> =
+    StringScalar<E>(initialValue, config)
