@@ -51,8 +51,8 @@ interface Entity<E: Entity<E>> {
 }
 ```
 
-> 👉Note incrementing `nextId` need not be thread-safe as will be discussed
-> later when presenting the memory image pattern
+> 👉 Note that incrementing `nextId` need not be thread-safe as will be
+> discussed later when presenting the memory image pattern
 
 Entity classes implement `Entity` via delegation:
 

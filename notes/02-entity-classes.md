@@ -96,7 +96,7 @@ Given these changes, we could test our `Bank` class like so:
 ```kotlin
 val bank = Bank("Monopoly Bank")
 assertEquals("Monopoly Bank", bank.name)
-bank.renameTo("\tACME Bank ")
+bank.renameTo("\tACME \t Bank ")
 assertEquals("ACME Bank", bank.name)
 ```
 
@@ -105,12 +105,12 @@ complexity without major gains in preserving integrity (in the end, we can
 trust ourselves to carefully craft integrity-preserving client code, right?).
 
 However, as we'll see later on, when the `name` participates of some other
-structure (such as a `Map<Name, Bank>` used to guarantee bank name uniqueness, for
-instance), the `renameTo` operation will need to take care of verifying the new
-name is not a duplicate _and_ replacing the old name iweth the new one in the
-map.
+structure (such as a `Map<Name, Bank>` used to guarantee bank name
+uniqueness, for instance), the `renameTo` operation will need to take care
+of verifying the new name is not a duplicate _and_ replacing the old name
+with the new one in the map.
 
 We wouldn't want our clients to be responsible for keeping things in sync or
-(worse yet!) to be able to subvert our cherished uniqueness-ensuring mechanism.
+(worse yet!) to subvert our cherished uniqueness-ensuring mechanism.
 
 [Previous: The `Entity` Interface](01-entity-interface.md)
