@@ -90,7 +90,7 @@ class Bank(initialName: Name) : Entity<Bank> by Entity() {
 
 ## More Name Validation: Length
 
-We may also want to restrict bank name length to be between 4 and 32
+We may also want to restrict bank name length to be between 6 and 32
 characters long:
 
 ```kotlin
@@ -102,10 +102,10 @@ class Bank(initialName: Name) : Entity<Bank> by Entity() {
                 .let(String::normalizeSpace)
                 .also {
                     require(it.isNotEmpty()) { "Invalid blank bank name" }
-                    require(it.length in 4..32) {
+                    require(it.length in 6..32) {
                         """
                             Invalid bank name length (${it.length}),
-                            must be between 4 and 32
+                            must be between 6 and 32
                         """.normalizeSpace()
                     }
                     field = it
@@ -117,10 +117,12 @@ class Bank(initialName: Name) : Entity<Bank> by Entity() {
 Our validation tests would now look like:
 
 ```kotlin
-// Name cannot be completely blank or empty
+// Blank
 assertFailsWith(IllegalArgumentException::class) { Bank("\t \t") }
-assertFailsWith(IllegalArgumentException::class) { Bank("bit") }
-assertFailsWith(IllegalArgumentException::class) { Bank("a".repeat(33)) }
+// Too short
+assertFailsWith(IllegalArgumentException::class) { Bank("short") }
+// Too long
+assertFailsWith(IllegalArgumentException::class) { Bank("long".repeat(9)) }
 ```
 
 # DSL for Scalar Property Declaration
@@ -137,8 +139,8 @@ class Bank(initialName: Name) : Entity<Bank> by Entity() {
     // `string` is a delegate provider, not a type
     var name by string(initialName) {
         normalizeWith(String::normalizeSpace)
-        rule(1000, nonEmpty) { "Bank name cannot be blank" }
-        val minLength = 4
+        rule(1000, nonEmpty()) { "Bank name cannot be blank" }
+        val minLength = 6
         val maxLength = 32
         rule(1001, lengthRange(minLength, maxLength)) {
             """
@@ -159,10 +161,10 @@ bank.name = "\tACME\t \tBank "
 assertEquals("ACME Bank", bank.name)
 val exception1 = assertFailsWith(DomainException::class) { Bank("\t \t") }
 assertEquals(1000, exception1.code) // Empty
-val exception2 = assertFailsWith(DomainException::class) { Bank("bit") }
+val exception2 = assertFailsWith(DomainException::class) { Bank("short") }
 assertEquals(1001, exception2.code) // Too short
 val exception3 = assertFailsWith(DomainException::class) {
-    Bank("a".repeat(33))
+    Bank("long".repeat(9))
 }
 assertEquals(1001, exception3.code) // Too long
 ```
@@ -192,22 +194,22 @@ object BankMessages : Messages<Bank>({
     English {
         rule(1000, "Non-empty name") {
             prompt("Bank Name")
-            fyi("Enter a name between 4 and 32 characters long")
-            error { "Invalid length (${it.length}. Must be between 4 and 32" }
+            fyi("Enter a name between 6 and 32 characters long")
+            error { "Invalid length (${it.length}. Must be between 6 and 32" }
         }
     }
     // Internationalization
     Spanish {
         rule(1000, "Nombre no vacío") {
             prompt("Nombre de banco")
-            fyi("Provee un nombre de entre 4 y 32 caracteres")
-            error { "Longitud (${it.length} inválida. Debe estar entre 4 y 32" }
+            fyi("Provee un nombre de entre 6 y 32 caracteres")
+            error { "Longitud (${it.length} inválida. Debe estar entre 6 y 32" }
             // Localization
             Ecuador {
-                fyi("Digita un nombre de entre 4 y 32 caracteres")
+                fyi("Digita un nombre de entre 6 y 32 caracteres")
             }
             Colombia {
-                fyi("Teclea un nombre de entre 4 y 32 caracteres")
+                fyi("Teclea un nombre de entre 6 y 32 caracteres")
             }
         }
     }
@@ -224,7 +226,7 @@ companion object:
 class Bank(initialName: Name) : Entity<Bank> by Entity() {
     var name by string(initialName) {
         normalizeWith(String::normalizeSpace)
-        rule(1000, nonEmpty) { "Bank name cannot be blank" }
+        rule(1000, nonEmpty()) { "Bank name cannot be blank" }
         rule(1001, lengthRange(MIN_NAME_LENGTH, MAX_NAME_LENGTH)) {
             """
                 Invalid bank name length (${it.length}),
@@ -235,7 +237,7 @@ class Bank(initialName: Name) : Entity<Bank> by Entity() {
 
     companion object {
         // Look ma: type-safe, editable constraint metadata
-        const val MIN_NAME_LENGTH = 4
+        const val MIN_NAME_LENGTH = 6
         const val MAX_NAME_LENGTH = 32
     }
 }
@@ -287,7 +289,7 @@ semantic clarity by giving the rename operation a meaningful name:
 ```kotlin
 var name by string(initialName) {
     normalizeWith(String::normalizeSpace)
-    rule(1000, nonEmpty) { "Bank name cannot be blank" }
+    rule(1000, nonEmpty()) { "Bank name cannot be blank" }
     rule(1001, lengthRange(MIN_NAME_LENGTH, MAX_NAME_LENGTH)) {
         """
             Invalid bank name length (${it.length}),
@@ -326,10 +328,10 @@ integrity (in the end, we can trust ourselves to carefully craft
 integrity-preserving client code, right? 😉).
 
 However, as we'll see later on, when the `name` participates of some other
-structure (such as a `Map<Name, Bank>` used to guarantee bank name
-uniqueness, for instance), the `renameTo` operation will need to take care
-of verifying the new name is not a duplicate _and_ replacing the old name
-with the new one in the map.
+responsibility (such as using a `Map<Name, Bank>` to guarantee bank name
+uniqueness, for instance), the `renameTo` operation will have the added
+onus of verifying the new name is not a duplicate _and_ replacing the old
+name with the new one in the map.
 
 We wouldn't want our clients to be responsible for keeping things in sync or
 (worse yet!) to subvert our cherished uniqueness-ensuring mechanism.

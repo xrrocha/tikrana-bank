@@ -29,7 +29,7 @@ class BankTest {
 
     @Test
     fun `Accept proper bank name lengths`() {
-        val minLengthName = "a".repeat(4)
+        val minLengthName = "a".repeat(6)
         assertEquals(minLengthName, Bank(minLengthName).name)
         val maxLengthName = "z".repeat(32)
         assertEquals(maxLengthName, Bank(maxLengthName).name)

@@ -18,7 +18,7 @@ abstract class ScalarDelegate<E, P, D : ScalarDelegate<E, P, D>>(
     private var value: P
 
     private var normalize: (P) -> P = { it }
-    private val rules = mutableListOf<Rule<P>>()
+    private val rules: MutableList<Rule<P>> = mutableListOf()
 
     init {
         @Suppress("unchecked_cast") // leaking this in constructor
@@ -56,7 +56,8 @@ class StringScalar<E>(
     config: StringScalar<E>.() -> Unit
 ) : ScalarDelegate<E, String, StringScalar<E>>(initialValue, config) {
 
-    val nonEmpty = String::isNotEmpty
+    fun nonEmpty() = String::isNotEmpty
+
     fun lengthRange(min: Int, max: Int) = { str: String ->
         str.length in min..max
     }

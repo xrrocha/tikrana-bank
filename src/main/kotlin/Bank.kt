@@ -2,7 +2,7 @@ class Bank(initialName: Name) : Entity<Bank> by Entity() {
 
     var name by string(initialName) {
         normalizeWith(String::normalizeSpace)
-        rule(1000, nonEmpty) { "Bank name cannot be blank" }
+        rule(1000, nonEmpty()) { "Bank name cannot be blank" }
         rule(1001, lengthRange(MIN_NAME_LENGTH, MAX_NAME_LENGTH)) {
             """
                 Invalid bank name length (${it.length}),
@@ -17,8 +17,8 @@ class Bank(initialName: Name) : Entity<Bank> by Entity() {
         name.also { name = newName }
 
     companion object {
-        // Look ma: type-safe, editable constraint metadata
-        private const val MIN_NAME_LENGTH = 4
+        // Type-safe, editable constraint metadata
+        private const val MIN_NAME_LENGTH = 6
         private const val MAX_NAME_LENGTH = 32
     }
 }
