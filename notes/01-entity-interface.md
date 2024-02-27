@@ -70,4 +70,4 @@ class Bank(initialName: Name) : Entity<Bank> by Entity() {
 }
 ```
 
-[Next: Entity Classes](02-scalar-properties)
+[Next: Scalar Properties](02-scalar-properties.md)
