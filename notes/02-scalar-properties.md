@@ -3,23 +3,7 @@
 Let's illustrate our approach to domain modeling with a (substantially!)
 simplified banking model:
 
-```plantuml
-@startuml
-interface Entity {
-    + id: Int
-}
-class Bank {
-    +name: Name
-}
-Bank -u-|> Entity
-class Account {
-    + name: Name
-    + balance: Amount
-}
-Account -u-|> Entity
-Bank "1" *--> "0..*" Account
-@enduml
-```
+![Minimal Bank Class Model](mini-class-model.png)
 
 Here, `Id`, `Name` and `Amount` are just convenient type aliases:
 

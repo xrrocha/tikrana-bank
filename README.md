@@ -17,4 +17,4 @@ following design goals:
 Exploration notes are:
 
 1. [The `Entity` Interface](notes/01-entity-interface.md)
-2. [Entity Classes](notes/02-scalar-properties)
+2. [Scalar Properties](notes/02-scalar-properties.md)

@@ -1,0 +1,15 @@
+@startuml
+interface Entity {
+    + id: Int
+}
+class Bank {
+    +name: Name
+}
+Bank -u-|> Entity
+class Account {
+    + name: Name
+    + balance: Amount
+}
+Account -u-|> Entity
+Bank "1" *--> "0..*" Account
+@enduml
