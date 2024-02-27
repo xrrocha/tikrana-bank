@@ -1,5 +1,3 @@
-import kotlin.reflect.KProperty
-
 class Bank(name: Name) : Entity<Bank> by Entity() {
 
     var name by string(name) {
