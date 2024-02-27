@@ -2,10 +2,6 @@ import kotlin.reflect.KProperty
 
 class Bank(name: Name) : Entity<Bank> by Entity() {
 
-    val uniques: Set<List<KProperty<*>>> = setOf(
-        listOf(::name)
-    )
-
     var name by string(name) {
         normalizeWith(String::normalizeSpace)
         rule(1000, nonEmpty()) {
