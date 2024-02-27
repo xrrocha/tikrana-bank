@@ -318,8 +318,6 @@ val bank = Bank("Monopoly Bank")
 assertEquals("Monopoly Bank", bank.name)
 bank.renameTo("\tACME \t Bank ")
 assertEquals("ACME Bank", bank.name)
-val exception = assertFailsWith(DomainException::class) { Bank("bit") }
-assertEquals(1001, exception.code)
 ```
 
 Adding a mutation `renameTo` method may not seen palatable to some who
